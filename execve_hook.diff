@@ -1,7 +1,7 @@
-diff --git a/exec.c b/exec.c
+diff --git a/fs/exec.c b/fs/exec.c
 index 5344364..cc612f0 100644
---- a/exec.c
-+++ b/exec.c
+--- a/fs/exec.c
++++ b/fs/exec.c
 @@ -1703,6 +1703,15 @@ static int exec_binprm(struct linux_binprm *bprm)
  	return ret;
  }
@@ -23,7 +23,7 @@ index 5344364..cc612f0 100644
  	int retval;
  
 +#ifdef CONFIG_KSU_MANUAL_HOOK
-+	ksu_handle_execveat(&fd, &filename, &argv, &envp, &flags)
++	ksu_handle_execveat(&fd, &filename, &argv, &envp, &flags);
 +#endif
 +
  	if (IS_ERR(filename))
@@ -33,9 +33,9 @@ index 5344364..cc612f0 100644
  	if (displaced)
  		reset_files_struct(displaced);
  out_ret:
-+	
++
 +#ifdef CONFIG_KSU_MANUAL_HOOK
-+	ksu_handle_post_execveat(&fd, &filename, &argv, &envp, &flags, &retval)
++	ksu_handle_post_execveat(&fd, &filename, &argv, &envp, &flags, &retval);
 +#endif
 +
  	putname(filename);
